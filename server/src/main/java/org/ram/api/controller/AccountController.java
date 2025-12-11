@@ -27,5 +27,13 @@ public class AccountController {
         return Response.status(Response.Status.CREATED).entity(response).build();
     }
 
+//    @GET
+//    @Path("/{id}")
+//    public Response getAccountById(@PathParam("id") Long id) {
+//
+//        AccountResponse response = accountService.getAccountById(id);
+//
+//        return Response.ok(response).build();
+//    }
 
 }

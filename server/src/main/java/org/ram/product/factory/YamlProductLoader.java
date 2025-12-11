@@ -13,17 +13,23 @@ import java.util.Map;
 @ApplicationScoped
 public class YamlProductLoader {
 
+
     public List<SalaryProduct> loadSalaryProducts() {
+
+        // create yaml parser
         Yaml yaml = new Yaml();
 
+        // read the yaml file from resources
         InputStream inputStream = getClass()
                 .getClassLoader()
                 .getResourceAsStream("salary-products.yml");
 
+        // Parse yaml into Java map
         Map<String, List<Map<String, Object>>> data = yaml.load(inputStream);
 
         List<SalaryProduct> result = new ArrayList<>();
 
+        // get the list
         List<Map<String, Object>> list = data.get("salary-products");
 
         if (list == null) {
@@ -54,11 +60,11 @@ public class YamlProductLoader {
         Map<String, List<Map<String, Object>>> data = yaml.load(inputStream);
 
         List<StudentProduct> result = new ArrayList<>();
-
+        
         List<Map<String, Object>> list = data.get("student-products");
 
         if (list == null) {
-            throw new RuntimeException("Missing 'student-products' root key in student-products.yml");
+            throw new RuntimeException("Missing 'student-products' in student-products.yml");
         }
 
         for(Map<String, Object> item: list) {

@@ -13,7 +13,10 @@ public class BalanceRepository implements PanacheRepository<Balance> {
         if(accountId == null) {
             return Optional.empty();
         }
+
+        // get the first balance record which matches with accountId
         Balance bal = find("account.id", accountId).firstResult();
+
         return Optional.ofNullable(bal);
     }
 
