@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>🎯Banking Client UI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Banking Client</h2>
+ 
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="accountTab">Accounts</button>
+        <button class="tab-btn" data-tab="transactionTab">Transactions</button>
+    </div>
+ 
+    <div id="accountTab" class="tab-content active">
+        <div class="two-col">
+ 
+            <div class="card">
+                <h3>Create Account</h3>
+
+                <input id="ca_productCode" placeholder="Product Code (SAL1, SAL2, STU1, STU2)" />
+                <select id="ca_productType">
+                    <option value="SALARY">SALARY</option>
+                    <option value="STUDENT">STUDENT</option>
+                </select>
+                <input id="ca_name" placeholder="Name" />
+                <input id="ca_age" type="number" placeholder="Age" />
+                <input id="ca_accountNumber" placeholder="Account Number (ACC-XXXX)" />
+
+                <button onclick="createAccount()">Create</button>
+                <div class="response-card" id="createAccountOutput"></div>
+            </div>
+ 
+            <div class="card">
+                <h3>Retrieve Account</h3>
+
+                <input id="ra_accountNumber" placeholder="Account Number" />
+                <select id="ra_productType">
+                    <option value="SALARY">SALARY</option>
+                    <option value="STUDENT">STUDENT</option>
+                </select>
+
+                <button onclick="retrieveAccount()">Retrieve</button>
+                <div class="response-card" id="retrieveAccountOutput"></div>
+            </div>
+
+        </div>
+    </div>
+ 
+    <div id="transactionTab" class="tab-content">
+        <div class="two-col">
+ 
+            <div class="card">
+                <h3>Post Transaction</h3>
+
+                <input id="pt_accountNumber" placeholder="Account Number" />
+                <select id="pt_paymentType">
+                    <option value="CREDIT">CREDIT</option>
+                    <option value="DEBIT">DEBIT</option>
+                </select>
+                <input id="pt_amount" type="number" placeholder="Amount" />
+                <input id="pt_date" placeholder="Date (YYYY-MM-DD)" />
+
+                <button onclick="postTransaction()">Post</button>
+                <div class="response-card" id="postTransactionOutput"></div>
+            </div>
+ 
+            <div class="card">
+                <h3>Retrieve Transaction</h3>
+
+                <input id="rt_postingNumber" placeholder="Posting Number (P-YYYYMMDD-XXXX)" />
+
+                <button onclick="retrieveTransaction()">Retrieve</button>
+                <div class="response-card" id="retrieveTransactionOutput"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

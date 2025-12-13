@@ -4,55 +4,59 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="507c3854-d1af-4e56-b9aa-f8307a413b0f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/docker/Dockerfile.jvm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/docker/Dockerfile.legacy-jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/docker/Dockerfile.native" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/docker/Dockerfile.native-micro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/GreetingResource.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/api/controller/AccountController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/api/controller/TransactionController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/api/controller/exception/GlobalExceptionMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/api/dto/AccountResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/api/dto/CreateAccountRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/api/dto/ErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/api/dto/PostTransactionRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/api/dto/PostTransactionResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/entity/Account.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/entity/Balance.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/entity/Posting.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/exception/AccountNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/exception/AgeRuleViolationException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/exception/AmountRuleViolationException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/exception/InsufficientBalanceException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/exception/InvalidProductException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/product/factory/ProductFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/product/factory/ProductRegistry.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/product/factory/YamlProductLoader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/product/model/Product.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/product/model/SalaryProduct.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/product/model/StudentProduct.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/product/strategy/ProductValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/product/strategy/SalaryProductValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/product/strategy/StudentProductValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/repository/AccountRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/repository/BalanceRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/repository/PostingRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/service/AccountService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/service/PostingNumberGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ram/service/TransactionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/salary-products.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/student-products.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ram/GreetingResourceIT.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ram/GreetingResourceTest.java" beforeDir="false" />
+    <list default="true" id="d6d50e47-2714-4aa6-a104-b49b3415d73b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.dockerignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/docker/Dockerfile.jvm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/docker/Dockerfile.legacy-jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/docker/Dockerfile.native" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/docker/Dockerfile.native-micro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/GreetingResource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/controller/AccountController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/controller/TransactionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/controller/exception/GlobalExceptionMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/dto/AccountResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/dto/CreateAccountRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/dto/ErrorResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/dto/PostTransactionRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/dto/PostTransactionResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/entity/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/entity/Balance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/entity/Posting.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/exception/AccountNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/exception/AgeRuleViolationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/exception/AmountRuleViolationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/exception/InsufficientBalanceException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/exception/InvalidProductException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/factory/ProductFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/factory/ProductRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/factory/YamlProductLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/model/Product.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/model/SalaryProduct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/model/StudentProduct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/strategy/ProductValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/strategy/SalaryProductValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/strategy/StudentProductValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/repository/AccountRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/repository/BalanceRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/repository/PostingRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/service/AccountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/service/PostingNumberGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/service/TransactionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/resources/salary-products.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/resources/student-products.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/ram/GreetingResourceIT.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/ram/GreetingResourceTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,13 +89,14 @@
   "customColor": "",
   "associatedIndex": 2
 }]]></component>
-  <component name="ProjectId" id="36eehpEWgeyLcDiat4ctFnixxDK" />
+  <component name="ProjectId" id="36jpVl4bwgWzRyXel1jabrc03BU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.AccountServiceTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -99,13 +104,35 @@
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="AccountServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bank_application" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ram.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.ram.service" />
+      <option name="MAIN_CLASS_NAME" value="org.ram.service.AccountServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.AccountServiceTest" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="507c3854-d1af-4e56-b9aa-f8307a413b0f" name="Changes" comment="" />
-      <created>1765371587227</created>
+      <changelist id="d6d50e47-2714-4aa6-a104-b49b3415d73b" name="Changes" comment="" />
+      <created>1765529862014</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1765371587227</updated>
+      <updated>1765529862014</updated>
     </task>
     <servers />
   </component>
