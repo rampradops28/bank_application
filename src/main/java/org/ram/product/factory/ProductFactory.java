@@ -36,7 +36,7 @@ public class ProductFactory {
         }
 
         if("STUDENT".equalsIgnoreCase(productType)) {
-            return new StudentProductValidator();
+               return new StudentProductValidator();
         }
 
         throw new InvalidProductException("Invalid product type: "+productType);

@@ -58,15 +58,13 @@ class TransactionServiceTest {
     void setup() {
         MockitoAnnotations.openMocks(this);
     }
-
-    // ===============================
-    // ✅ Debit success
-    // ===============================
+ 
+    // Debit success 
     @Test
     void debitTransaction_success() {
 
         // --- Account setup ---
-        Account account = new Account(); 
+        Account account = new Account();
         account.setAccountNumber("ACC001");
         account.setProductType("SALARY");
         account.setProductCode("SAL1");
@@ -162,7 +160,7 @@ class TransactionServiceTest {
     }
 
 
-    // ❌ Amount rule violation
+    // Amount rule violation
     @Test
     void transaction_amountRuleViolation() {
 

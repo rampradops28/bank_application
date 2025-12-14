@@ -11,7 +11,7 @@ Create account
 {
   "productCode": "SAL1",
   "productType": "SALARY",
-  "name": "John Doe",
+  "name": "rampradop",
   "age": 30,
   "accountNumber": "ACC001"
 }
@@ -46,5 +46,8 @@ API returns structured errors via a global exception mapper, for example:
 }
 ```
 
-## License
-MIT (or choose your preferred license)
+## Tests
+- Unit tests (JUnit + Mockito)
+  - Mock repositories/collaborators (AccountRepository, BalanceRepository, PostingRepository, ProductFactory) with Mockito.
+  - Cover key scenarios: debit/credit success, insufficient balance, amount-rule violations, and posting-number generation.
+ 
