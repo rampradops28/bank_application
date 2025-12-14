@@ -29,6 +29,31 @@ Post transaction
 }
 ```
 
+Get transactionHistory
+- GET /api/v1/accounts/{accountNumber}/transactions
+- Description: Retrieves all transactions for a given account, including balance before/after, type, amount, date, and posting number.
+- Example request
+```json
+[
+  { 
+    "accountNumber": "ACC001",
+    "paymentType": "DEBIT",
+    "amount": 100,
+    "balanceBefore": 500,
+    "balanceAfter": 400,
+    "transactionDate": "2025-12-10"
+  },
+  { 
+    "accountNumber": "ACC001",
+    "paymentType": "CREDIT",
+    "amount": 200,
+    "balanceBefore": 300,
+    "balanceAfter": 500,
+    "transactionDate": "2025-12-09"
+  }
+]
+```
+
 ## Product Rules (YAML)
 Product rules are loaded from:
 - src/main/resources/salary-products.yml

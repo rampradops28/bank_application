@@ -8,6 +8,7 @@ import org.ram.api.dto.PostTransactionResponse;
 import org.ram.entity.Account;
 import org.ram.entity.Balance;
 import org.ram.entity.Posting;
+import org.ram.entity.TransactionHistory;
 import org.ram.exception.AccountNotFoundException;
 import org.ram.exception.AmountRuleViolationException;
 import org.ram.exception.InsufficientBalanceException;
@@ -18,7 +19,9 @@ import org.ram.product.strategy.ProductValidator;
 import org.ram.repository.AccountRepository;
 import org.ram.repository.BalanceRepository;
 import org.ram.repository.PostingRepository;
+import org.ram.repository.TransactionHistoryRepository;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @ApplicationScoped
@@ -32,6 +35,9 @@ public class TransactionService {
 
     @Inject
     PostingRepository postingRepository;
+
+    @Inject
+    TransactionHistoryRepository transactionHistoryRepository;
 
     @Inject
     ProductFactory productFactory;
@@ -57,6 +63,7 @@ public class TransactionService {
         // validate amount rule
         validator.validateOnTransaction(product, req.getAmount());
 
+        BigDecimal balanceBefore = bal.getBalance(); 
         // debit or credit logic
         if (req.getPaymentType().equalsIgnoreCase("DEBIT")) {
 
@@ -72,6 +79,10 @@ public class TransactionService {
             throw new AmountRuleViolationException("Invalid paymentType (DEBIT/CREDIT only)");
         }
 
+        BigDecimal balanceAfter = bal.getBalance(); 
+
+        bal.setBalance(balanceAfter);
+
         balanceRepository.save(bal);
 
         // create posting
@@ -84,6 +95,18 @@ public class TransactionService {
         posting.setAmount(req.getAmount());
 
         postingRepository.save(posting);
+
+            TransactionHistory history = new TransactionHistory();
+            history.setAccount(acc);
+            history.setPostingNumber(posting.getPostingNumber()); 
+            history.setAccountNumber(req.getAccountNumber());
+            history.setPaymentType(req.getPaymentType());
+            history.setAmount(req.getAmount());
+            history.setBalanceBefore(balanceBefore);
+            history.setBalanceAfter(balanceAfter);
+            history.setTransactionDate(req.getDate()); 
+
+        transactionHistoryRepository.persist(history);
 
         return new PostTransactionResponse(
                 posting.getPostingNumber(),

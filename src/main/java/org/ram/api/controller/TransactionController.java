@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.ram.api.dto.PostTransactionRequest;
 import org.ram.api.dto.PostTransactionResponse;
+import org.ram.service.TransactionHistoryService;
 import org.ram.service.TransactionService;
 
 @Path("/api/v1/transactions")

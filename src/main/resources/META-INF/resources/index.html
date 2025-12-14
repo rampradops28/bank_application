@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>🎯Banking Client UI</title>
+    <title>🎯 Banking Client UI</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -80,6 +80,16 @@
             </div>
 
         </div>
+ 
+        <div class="card" style="margin-top:20px;">
+            <h3>Transaction History</h3>
+
+            <input id="th_accountNumber" placeholder="Account Number" />
+            <button onclick="loadTransactionHistory()">Load History</button>
+
+            <div class="response-card" id="transactionHistoryOutput"></div>
+        </div>
+
     </div>
 
 </div>
