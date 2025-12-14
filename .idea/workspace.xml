@@ -6,57 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d6d50e47-2714-4aa6-a104-b49b3415d73b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/docker/Dockerfile.jvm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/docker/Dockerfile.legacy-jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/docker/Dockerfile.native" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/docker/Dockerfile.native-micro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/GreetingResource.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/controller/AccountController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/controller/TransactionController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/controller/exception/GlobalExceptionMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/dto/AccountResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/dto/CreateAccountRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/dto/ErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/dto/PostTransactionRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/api/dto/PostTransactionResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/entity/Account.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/entity/Balance.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/entity/Posting.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/exception/AccountNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/exception/AgeRuleViolationException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/exception/AmountRuleViolationException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/exception/InsufficientBalanceException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/exception/InvalidProductException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/factory/ProductFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/factory/ProductRegistry.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/factory/YamlProductLoader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/model/Product.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/model/SalaryProduct.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/model/StudentProduct.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/strategy/ProductValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/strategy/SalaryProductValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/product/strategy/StudentProductValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/repository/AccountRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/repository/BalanceRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/repository/PostingRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/service/AccountService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/service/PostingNumberGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/ram/service/TransactionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/resources/salary-products.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/resources/student-products.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/ram/GreetingResourceIT.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/ram/GreetingResourceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ram/service/AccountServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ram/service/AccountServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ram/service/TransactionServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ram/service/TransactionServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,18 +19,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "rampradops28"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;rampradops28&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/rampradops28/bank_application.git",
-    "accountId": "24eea5aa-fc65-424a-bb6b-4c6956c2c32f"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/rampradops28/bank_application.git&quot;,
+    &quot;accountId&quot;: &quot;24eea5aa-fc65-424a-bb6b-4c6956c2c32f&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -85,10 +38,10 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="36jpVl4bwgWzRyXel1jabrc03BU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -97,6 +50,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.AccountServiceTest.executor": "Run",
+    "JUnit.TransactionServiceTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",

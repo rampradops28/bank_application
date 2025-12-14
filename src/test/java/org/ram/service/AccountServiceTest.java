@@ -1,113 +1,149 @@
-//package org.ram.service;
-//
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.*;
-//import org.ram.api.dto.CreateAccountRequest;
-//import org.ram.entity.Account;
-//import org.ram.entity.Balance;
-//import org.ram.exception.*;
-//import org.ram.product.factory.ProductFactory;
-//import org.ram.product.model.Product;
-//import org.ram.product.strategy.ProductValidator;
-//import org.ram.repository.AccountRepository;
-//import org.ram.repository.BalanceRepository;
-//
-//import java.util.Optional;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//import static org.mockito.Mockito.*;
-//
-//public class AccountServiceTest {
-//
-//    @Mock AccountRepository accountRepository;
-//    @Mock BalanceRepository balanceRepository;
-//    @Mock ProductFactory productFactory;
-//    @Mock ProductValidator validator;
-//    @Mock Product product;
-//
-//    @InjectMocks AccountService accountService;
-//
-//    @BeforeEach
-//    void setup() {
-//        MockitoAnnotations.openMocks(this);
-//    }
-//
-//    // ✔ SUCCESS
-//    @Test
-//    void testCreateAccountSuccess() {
-//        CreateAccountRequest req = new CreateAccountRequest();
-//        req.accountNumber = "ACC100";
-//        req.name = "John";
-//        req.age = 30;
-//        req.productCode = "SAL1";
-//        req.productType = "SALARY";
-//
-//        when(accountRepository.findByAccountNumber("ACC100"))
-//                .thenReturn(Optional.empty());
-//
-//        when(productFactory.getProduct("SALARY", "SAL1"))
-//                .thenReturn(product);
-//
-//        when(product.getValidator()).thenReturn(validator);
-//
-//        doNothing().when(validator).validateAge(anyInt());
-//
-//        Account saved = new Account();
-//        saved.id = 1L;
-//
-//        when(accountRepository.persist(any(Account.class))).thenReturn(saved);
-//
-//        Balance balance = new Balance();
-//        balance.id = 1L;
-//
-//        when(balanceRepository.persist(any(Balance.class))).thenReturn(balance);
-//
-//        var result = accountService.createAccount(req);
-//
-//        assertEquals("ACC100", result.accountNumber);
-//        verify(validator).validateAge(30);
-//    }
-//
-//    // ❌ DUPLICATE ACCOUNT
-//    @Test
-//    void testDuplicateAccountNumber() {
-//
-//        when(accountRepository.findByAccountNumber("ACC100"))
-//                .thenReturn(Optional.of(new Account()));
-//
-//        CreateAccountRequest req = new CreateAccountRequest();
-//        req.accountNumber = "ACC100";
-//
-//        assertThrows(
-//                DuplicateAccountException.class,
-//                () -> accountService.createAccount(req)
-//        );
-//    }
-//
-//    // ❌ AGE FAILURE
-//    @Test
-//    void testAgeValidationFailure() {
-//        CreateAccountRequest req = new CreateAccountRequest();
-//        req.accountNumber = "ACC999";
-//        req.age = 17;
-//        req.productCode = "SAL1";
-//        req.productType = "SALARY";
-//
-//        when(accountRepository.findByAccountNumber("ACC999"))
-//                .thenReturn(Optional.empty());
-//
-//        when(productFactory.getProduct("SALARY", "SAL1"))
-//                .thenReturn(product);
-//
-//        when(product.getValidator()).thenReturn(validator);
-//
-//        doThrow(new AgeRuleViolationException("Min age is 21"))
-//                .when(validator).validateAge(17);
-//
-//        assertThrows(
-//                AgeRuleViolationException.class,
-//                () -> accountService.createAccount(req)
-//        );
-//    }
-//}
+package org.ram.service;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.*;
+import org.ram.api.dto.CreateAccountRequest;
+import org.ram.entity.Account;
+import org.ram.entity.Balance;
+import org.ram.exception.AgeRuleViolationException;
+import org.ram.exception.InvalidProductException;
+import org.ram.product.factory.ProductFactory;
+import org.ram.product.model.Product;
+import org.ram.product.strategy.ProductValidator;
+import org.ram.repository.AccountRepository;
+import org.ram.repository.BalanceRepository;
+
+import java.math.BigDecimal; 
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
+
+class AccountServiceTest {
+
+    @Mock
+    AccountRepository accountRepository;
+
+    @Mock
+    BalanceRepository balanceRepository;
+
+    @Mock
+    ProductFactory productFactory;
+
+    @Mock
+    Product product;
+
+    @Mock
+    ProductValidator productValidator;
+
+    @InjectMocks
+    AccountService accountService;
+    /**
+     * AccountService
+        - fake AccountRepository
+        - fake BalanceRepository
+        - fake ProductFactory
+        - fake ProductValidator
+     */
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    // Account creation success
+    @Test
+    void createAccount_success() {
+
+        CreateAccountRequest req = new CreateAccountRequest();
+        req.setAccountNumber("ACC001");
+        req.setAge(30);
+        req.setProductType("SALARY");
+        req.setProductCode("SAL1");
+        req.setName("Ram");
+ 
+        when(productFactory.getProduct("SALARY", "SAL1"))
+                .thenReturn(product);
+        
+        when(productFactory.getValidator("SALARY"))
+                .thenReturn(productValidator);
+
+        doNothing().when(productValidator)
+                .validateOnAccountCreation(product, 30);
+
+        when(accountRepository.existByAccountNumber("ACC001"))
+                .thenReturn(false);
+
+        when(balanceRepository.save(any(Balance.class)))
+                .thenAnswer(inv -> {
+                    Balance b = inv.getArgument(0);
+                    b.setBalance(BigDecimal.ZERO);
+                    return b;
+                });
+
+        assertDoesNotThrow(() -> accountService.createAccount(req));
+
+        verify(accountRepository).save(any(Account.class));
+        verify(balanceRepository).save(any(Balance.class));
+    }
+
+    // Duplicate account number
+    @Test
+    void createAccount_duplicateAccountNumber() {
+
+        CreateAccountRequest req = new CreateAccountRequest();
+        req.setAccountNumber("ACC001");
+        req.setAge(30);
+        req.setProductType("SALARY");
+        req.setProductCode("SAL1");
+
+        when(productFactory.getProduct(req.getProductType(), req.getProductCode()))
+                .thenReturn(product);
+
+        when(productFactory.getValidator(req.getProductType()))
+                .thenReturn(productValidator);
+
+        doNothing().when(productValidator)
+                .validateOnAccountCreation(any(), anyInt());
+
+        when(accountRepository.existByAccountNumber("ACC001"))
+                .thenReturn(true);
+
+        assertThrows(
+                InvalidProductException.class,
+                () -> accountService.createAccount(req)
+        );
+
+        verify(accountRepository, never()).save(any());
+    }
+
+    // ❌ Age validation failure
+    @Test
+    void createAccount_ageValidationFailed() {
+
+        CreateAccountRequest req = new CreateAccountRequest();
+        req.setAccountNumber("ACC002");
+        req.setAge(17);
+        req.setProductType("SALARY");
+        req.setProductCode("SAL1");
+
+        when(productFactory.getProduct("SALARY", "SAL1"))
+                .thenReturn(product);
+
+        when(productFactory.getValidator("SALARY"))
+                .thenReturn(productValidator);
+
+        doThrow(new AgeRuleViolationException("Age not allowed"))
+                .when(productValidator)
+                .validateOnAccountCreation(product, 17);
+
+        assertThrows(
+                AgeRuleViolationException.class,
+                () -> accountService.createAccount(req)
+        );
+
+        verify(accountRepository, never()).save(any());
+    }
+}

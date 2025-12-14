@@ -1,68 +1,50 @@
-# bank_application
+# MiniBank — Quarkus REST API  
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+A lightweight banking example built with Quarkus, JPA/Hibernate (Panache) and YAML-driven product rules. 
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## API Endpoints
 
-## Running the application in dev mode
-
-You can run your application in dev mode that enables live coding using:
-
-```shell script
-./mvnw quarkus:dev
+Create account
+- POST /api/v1/accounts
+- Example request:
+```json
+{
+  "productCode": "SAL1",
+  "productType": "SALARY",
+  "name": "John Doe",
+  "age": 30,
+  "accountNumber": "ACC001"
+}
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
-
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
-./mvnw package
+Post transaction
+- POST /api/v1/transactions
+- Example request:
+```json
+{
+  "accountNumber": "ACC001",
+  "paymentType": "DEBIT",
+  "amount": 100,
+  "postingDate": "2025-12-10"
+}
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+## Product Rules (YAML)
+Product rules are loaded from:
+- src/main/resources/salary-products.yml
+- src/main/resources/student-products.yml
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+They define product codes, age limits and transaction limits.
 
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+## Error Handling
+API returns structured errors via a global exception mapper, for example:
+```json
+{
+  "timeStamp": "2025-12-10T10:04:50Z",
+  "errorCode": "InsufficientBalanceException",
+  "message": "Not enough balance"
+}
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/bank_application-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Reactive PostgreSQL client ([guide](https://quarkus.io/guides/reactive-sql-clients)): Connect to the PostgreSQL database using the reactive pattern
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+## License
+MIT (or choose your preferred license)
