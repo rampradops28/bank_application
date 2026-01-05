@@ -4,9 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.ram.entity.TransactionHistory;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.List; 
 
 @ApplicationScoped
 public class TransactionHistoryRepository implements PanacheRepository<TransactionHistory> {

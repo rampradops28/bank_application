@@ -10,8 +10,7 @@ import jakarta.ws.rs.core.Response;
 import org.ram.api.dto.AccountResponse;
 import org.ram.api.dto.CreateAccountRequest;
 import org.ram.service.AccountService;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.OPTIONS;
+import jakarta.ws.rs.GET; 
 import jakarta.ws.rs.QueryParam;
 
 

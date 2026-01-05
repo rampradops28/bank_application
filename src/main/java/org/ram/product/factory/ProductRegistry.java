@@ -36,9 +36,9 @@ public class ProductRegistry {
         for(StudentProduct p: loader.loadStudentProducts()) {
             studentProducts.put(p.getCode(), p);
         }
-        /**
+        /**U1" → StudentProduct(type="STUDENT", code="STU1", maxAge=17, maxTransactionAmount=50)
          * studentProducts = {
-           "STU1" → StudentProduct(type="STUDENT", code="STU1", maxAge=17, maxTransactionAmount=50)
+           "ST
            "STU2" → StudentProduct(type="STUDENT", code="STU2", maxAge=18, maxTransactionAmount=80)}
          */
 

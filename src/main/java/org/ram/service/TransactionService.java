@@ -96,15 +96,15 @@ public class TransactionService {
 
         postingRepository.save(posting);
 
-            TransactionHistory history = new TransactionHistory();
-            history.setAccount(acc);
-            history.setPostingNumber(posting.getPostingNumber()); 
-            history.setAccountNumber(req.getAccountNumber());
-            history.setPaymentType(req.getPaymentType());
-            history.setAmount(req.getAmount());
-            history.setBalanceBefore(balanceBefore);
-            history.setBalanceAfter(balanceAfter);
-            history.setTransactionDate(req.getDate()); 
+        TransactionHistory history = new TransactionHistory();
+        history.setAccount(acc);
+        history.setPostingNumber(posting.getPostingNumber()); 
+        history.setAccountNumber(req.getAccountNumber());
+        history.setPaymentType(req.getPaymentType());
+        history.setAmount(req.getAmount());
+        history.setBalanceBefore(balanceBefore);
+        history.setBalanceAfter(balanceAfter);
+        history.setTransactionDate(req.getDate()); 
 
         transactionHistoryRepository.persist(history);
 

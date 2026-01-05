@@ -18,6 +18,7 @@ import org.ram.product.strategy.ProductValidator;
 import org.ram.repository.AccountRepository;
 import org.ram.repository.BalanceRepository;
 import org.ram.repository.PostingRepository;
+import org.ram.repository.TransactionHistoryRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -54,31 +55,35 @@ class TransactionServiceTest {
     @InjectMocks
     TransactionService transactionService;
 
+    @Mock
+    TransactionHistoryRepository transactionHistoryRepository;
+
+
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
     }
- 
+
     // Debit success 
     @Test
     void debitTransaction_success() {
 
-        // --- Account setup ---
+        // Account setup
         Account account = new Account();
         account.setAccountNumber("ACC001");
         account.setProductType("SALARY");
         account.setProductCode("SAL1");
 
-        // --- Balance setup ---
+        //  Balance setup
         Balance balance = new Balance();
         balance.setBalance(new BigDecimal("500"));
         balance.setAccount(account);
 
-        // --- Mock Product & Validator ---
+        // Mock Product & Validator
         Product product = mock(Product.class);
         ProductValidator validator = mock(ProductValidator.class);
 
-        // --- Mock Repositories ---
+        // Mock Repositories
         when(accountRepository.findByAccountNumber("ACC001"))
                 .thenReturn(Optional.of(account));
         when(balanceRepository.findByAccountId(account.getId()))
@@ -91,25 +96,25 @@ class TransactionServiceTest {
         // Validator does nothing
         doNothing().when(validator).validateOnTransaction(any(), any());
 
-        // --- Mock Posting Number Generator ---
+        // Mock Posting Number Generator
         when(postingNumberGenerator.generate())
                 .thenReturn("POST001");
 
-        // --- Mock PostingRepository save ---
+        // Mock PostingRepository save
         when(postingRepository.save(any(Posting.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
-        // --- Create request ---
+        // Create request
         PostTransactionRequest request = new PostTransactionRequest();
         request.setAccountNumber("ACC001");
         request.setPaymentType("DEBIT");
         request.setAmount(new BigDecimal("100"));
         request.setDate(LocalDate.now());
 
-        // --- Call service ---
+        // Call service
         var response = transactionService.postTransaction(request);
 
-        // --- Assertions ---
+        // Assertions
         assertEquals("POST001", response.getPostingNumber());
         assertEquals(new BigDecimal("400"), balance.getBalance());
     }
@@ -119,7 +124,7 @@ class TransactionServiceTest {
     void debitTransaction_insufficientFunds() {
 
         // Account setup
-        Account account = new Account();  // set ID since JPA normally sets it
+        Account account = new Account();
         account.setAccountNumber("ACC002");
         account.setProductType("SALARY");
         account.setProductCode("SAL1");
@@ -152,7 +157,6 @@ class TransactionServiceTest {
         request.setPaymentType("DEBIT");
         request.setAmount(new BigDecimal("100"));
 
-        // Test should now throw InsufficientBalanceException
         assertThrows(
                 InsufficientBalanceException.class,
                 () -> transactionService.postTransaction(request)
@@ -160,7 +164,6 @@ class TransactionServiceTest {
     }
 
 
-    // Amount rule violation
     @Test
     void transaction_amountRuleViolation() {
 
@@ -199,26 +202,25 @@ class TransactionServiceTest {
         );
     }
 
-    // Posting number generation 
     @Test
     void postingNumberGeneratedCorrectly() {
 
-        // --- Setup Account ---
-        Account account = new Account(); // set ID since JPA normally sets it
+        // Setup Account
+        Account account = new Account();
         account.setAccountNumber("ACC004");
         account.setProductType("SALARY");
         account.setProductCode("SAL1");
 
-        // --- Setup Balance ---
+        // Setup Balance
         Balance balance = new Balance();
         balance.setBalance(new BigDecimal("200"));
         balance.setAccount(account);
 
-        // --- Mock Product & Validator ---
+        // Mock Product & Validator
         Product product = mock(Product.class);
         ProductValidator validator = mock(ProductValidator.class);
 
-        // --- Mock Repositories ---
+        // Mock Repositories
         when(accountRepository.findByAccountNumber("ACC004"))
                 .thenReturn(Optional.of(account));
         when(balanceRepository.findByAccountId(account.getId()))
@@ -231,28 +233,27 @@ class TransactionServiceTest {
         // Validator does nothing
         doNothing().when(validator).validateOnTransaction(any(), any());
 
-        // --- Mock Posting Number Generator ---
+        // Mock Posting Number Generator
         when(postingNumberGenerator.generate())
-                .thenReturn("POST20251210-01"); // match expected posting number
+                .thenReturn("POST20251210-01");
 
-        // --- Mock Posting Repository Save ---
+        // Mock Posting Repository Save
         when(postingRepository.save(any()))
                 .thenAnswer(invocation -> invocation.getArgument(0));
         // Return the same posting object passed in, so number from generator is preserved
 
-        // --- Create Request ---
+        // Create Request
         PostTransactionRequest request = new PostTransactionRequest();
         request.setAccountNumber("ACC004");
         request.setPaymentType("CREDIT");
         request.setAmount(new BigDecimal("50"));
 
-        // --- Call Service ---
+        // Call Service
         PostTransactionResponse response = transactionService.postTransaction(request);
 
-        // --- Assert Posting Number ---
+        // Assert Posting Number
         assertEquals("POST20251210-01", response.getPostingNumber());
 
-        // --- Optional: assert balance updated correctly ---
         assertEquals(new BigDecimal("250"), balance.getBalance());
     }
 }
