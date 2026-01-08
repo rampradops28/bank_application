@@ -63,10 +63,10 @@ class AccountServiceTest {
         req.setProductType("SALARY");
         req.setProductCode("SAL1");
         req.setName("Ram");
- 
+
         when(productFactory.getProduct("SALARY", "SAL1"))
                 .thenReturn(product);
-        
+
         when(productFactory.getValidator("SALARY"))
                 .thenReturn(productValidator);
 
@@ -77,16 +77,14 @@ class AccountServiceTest {
                 .thenReturn(false);
 
         when(balanceRepository.save(any(Balance.class)))
-                .thenAnswer(inv -> {
-                    Balance b = inv.getArgument(0);
-                    b.setBalance(BigDecimal.ZERO);
-                    return b;
-                });
+                .thenAnswer(inv -> inv.getArgument(0));
 
         assertDoesNotThrow(() -> accountService.createAccount(req));
 
         verify(accountRepository).save(any(Account.class));
-        verify(balanceRepository).save(any(Balance.class));
+
+        // ✅ TWO balances created: LEDGER + AVAILABLE
+        verify(balanceRepository, times(2)).save(any(Balance.class));
     }
 
     // Duplicate account number

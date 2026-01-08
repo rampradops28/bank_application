@@ -2,6 +2,7 @@ package org.ram.api.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.*;
 
 public class AccountResponse implements Serializable {
 
@@ -10,17 +11,17 @@ public class AccountResponse implements Serializable {
     public String productType;
     public String name;
     public int age;
-    public BigDecimal balance;
+    private List<BalanceResponse> balances;
 
     public AccountResponse() { }
 
-    public AccountResponse(String accountNumber, String productCode, String productType, String name, int age, BigDecimal balance) {
+    public AccountResponse(String accountNumber, String productCode, String productType, String name, int age,List<BalanceResponse> balances) {
         this.accountNumber = accountNumber;
         this.productCode = productCode;
         this.productType = productType;
         this.name = name;
         this.age = age;
-        this.balance = balance;
+        this.balances = balances;
     }
 
     public String getAccountNumber() {
@@ -63,11 +64,11 @@ public class AccountResponse implements Serializable {
         this.age = age;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public List<BalanceResponse> getBalances() {
+        return balances;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setBalances(List<BalanceResponse> balances) {
+        this.balances = balances;
     }
 }

@@ -5,10 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.ram.api.dto.PostTransactionRequest;
 import org.ram.api.dto.PostTransactionResponse;
-import org.ram.entity.Account;
-import org.ram.entity.Balance;
-import org.ram.entity.Posting;
-import org.ram.entity.TransactionHistory;
+import org.ram.entity.*;
 import org.ram.exception.AccountNotFoundException;
 import org.ram.exception.AmountRuleViolationException;
 import org.ram.exception.InsufficientBalanceException;
@@ -23,6 +20,7 @@ import org.ram.repository.TransactionHistoryRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @ApplicationScoped
 public class TransactionService {
@@ -53,8 +51,13 @@ public class TransactionService {
                 .orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
         // find balance
-        Balance bal = balanceRepository.findByAccountId(acc.getId())
-                .orElseThrow(() -> new AccountNotFoundException("Balance record missing"));
+        Balance ledger = balanceRepository
+                .findByAccountAndType(acc, BalanceType.LEDGER)
+                .orElseThrow();
+
+        Balance available = balanceRepository
+                .findByAccountAndType(acc, BalanceType.AVAILABLE)
+                .orElseThrow();
 
         // get product and validator
         Product product = productFactory.getProduct(acc.getProductType(), acc.getProductCode());
@@ -63,27 +66,34 @@ public class TransactionService {
         // validate amount rule
         validator.validateOnTransaction(product, req.getAmount());
 
-        BigDecimal balanceBefore = bal.getBalance(); 
+        BigDecimal balanceBefore = available.getBalance();
         // debit or credit logic
         if (req.getPaymentType().equalsIgnoreCase("DEBIT")) {
 
-            if (bal.getBalance().compareTo(req.getAmount()) < 0) { // -1
+            if (available.getBalance().compareTo(req.getAmount()) < 0) { // -1
                 throw new InsufficientBalanceException("Not enough balance");
             }
 
-            bal.setBalance(bal.getBalance().subtract(req.getAmount()));
+            /**
+             * returns -1 if first < second
+                returns 0 if equal
+                returns 1 if first > second
+             */
+
+            ledger.setBalance(ledger.getBalance().subtract(req.getAmount()));
+            available.setBalance(available.getBalance().subtract(req.getAmount()));
 
         } else if (req.getPaymentType().equalsIgnoreCase("CREDIT")) {
-            bal.setBalance(bal.getBalance().add(req.getAmount()));
+            ledger.setBalance(ledger.getBalance().add(req.getAmount()));
+            available.setBalance(available.getBalance().add(req.getAmount()));
         } else {
             throw new AmountRuleViolationException("Invalid paymentType (DEBIT/CREDIT only)");
         }
 
-        BigDecimal balanceAfter = bal.getBalance(); 
+        BigDecimal balanceAfter = available.getBalance();
 
-        bal.setBalance(balanceAfter);
-
-        balanceRepository.save(bal);
+        balanceRepository.save(ledger);
+        balanceRepository.save(available);
 
         // create posting
         Posting posting = new Posting();
@@ -104,7 +114,7 @@ public class TransactionService {
         history.setAmount(req.getAmount());
         history.setBalanceBefore(balanceBefore);
         history.setBalanceAfter(balanceAfter);
-        history.setTransactionDate(req.getDate()); 
+        history.setTransactionDate(LocalDate.now()); 
 
         transactionHistoryRepository.persist(history);
 

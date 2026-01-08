@@ -2,31 +2,23 @@ package org.ram.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.ram.api.dto.PostTransactionRequest;
-import org.ram.api.dto.PostTransactionResponse;
-import org.ram.entity.Account;
-import org.ram.entity.Balance;
-import org.ram.entity.Posting;
-import org.ram.exception.AmountRuleViolationException;
-import org.ram.exception.InsufficientBalanceException;
+import org.mockito.*;
+import org.ram.entity.*;
+import org.ram.entity.BalanceType;
+import org.ram.exception.*;
 import org.ram.product.factory.ProductFactory;
 import org.ram.product.model.Product;
 import org.ram.product.strategy.ProductValidator;
-import org.ram.repository.AccountRepository;
-import org.ram.repository.BalanceRepository;
-import org.ram.repository.PostingRepository;
-import org.ram.repository.TransactionHistoryRepository;
+import org.ram.repository.*;
+import org.ram.service.TransactionService;
+import org.ram.service.PostingNumberGenerator;
+import org.ram.api.dto.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 class TransactionServiceTest {
@@ -52,106 +44,109 @@ class TransactionServiceTest {
     @Mock
     PostingNumberGenerator postingNumberGenerator;
 
-    @InjectMocks
-    TransactionService transactionService;
-
     @Mock
     TransactionHistoryRepository transactionHistoryRepository;
 
+    @InjectMocks
+    TransactionService transactionService;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
-    // Debit success 
+    // DEBIT SUCCESS 
     @Test
     void debitTransaction_success() {
 
-        // Account setup
         Account account = new Account();
         account.setAccountNumber("ACC001");
         account.setProductType("SALARY");
         account.setProductCode("SAL1");
 
-        //  Balance setup
-        Balance balance = new Balance();
-        balance.setBalance(new BigDecimal("500"));
-        balance.setAccount(account);
+        Balance ledger = new Balance();
+        ledger.setBalanceType(BalanceType.LEDGER);
+        ledger.setBalance(new BigDecimal("500"));
+        ledger.setAccount(account);
 
-        // Mock Product & Validator
-        Product product = mock(Product.class);
-        ProductValidator validator = mock(ProductValidator.class);
+        Balance available = new Balance();
+        available.setBalanceType(BalanceType.AVAILABLE);
+        available.setBalance(new BigDecimal("500"));
+        available.setAccount(account);
 
-        // Mock Repositories
         when(accountRepository.findByAccountNumber("ACC001"))
                 .thenReturn(Optional.of(account));
-        when(balanceRepository.findByAccountId(account.getId()))
-                .thenReturn(Optional.of(balance));
+
+        when(balanceRepository.findByAccountAndType(account, BalanceType.LEDGER))
+                .thenReturn(Optional.of(ledger));
+
+        when(balanceRepository.findByAccountAndType(account, BalanceType.AVAILABLE))
+                .thenReturn(Optional.of(available));
+
         when(productFactory.getProduct("SALARY", "SAL1"))
                 .thenReturn(product);
+
         when(productFactory.getValidator("SALARY"))
-                .thenReturn(validator);
+                .thenReturn(productValidator);
 
-        // Validator does nothing
-        doNothing().when(validator).validateOnTransaction(any(), any());
+        doNothing().when(productValidator)
+                .validateOnTransaction(any(), any());
 
-        // Mock Posting Number Generator
         when(postingNumberGenerator.generate())
                 .thenReturn("POST001");
 
-        // Mock PostingRepository save
-        when(postingRepository.save(any(Posting.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
+        when(postingRepository.save(any()))
+                .thenAnswer(inv -> inv.getArgument(0));
 
-        // Create request
         PostTransactionRequest request = new PostTransactionRequest();
         request.setAccountNumber("ACC001");
         request.setPaymentType("DEBIT");
         request.setAmount(new BigDecimal("100"));
         request.setDate(LocalDate.now());
 
-        // Call service
-        var response = transactionService.postTransaction(request);
+        PostTransactionResponse response =
+                transactionService.postTransaction(request);
 
-        // Assertions
         assertEquals("POST001", response.getPostingNumber());
-        assertEquals(new BigDecimal("400"), balance.getBalance());
+        assertEquals(new BigDecimal("400"), ledger.getBalance());
+        assertEquals(new BigDecimal("400"), available.getBalance());
     }
 
-    // Insufficient funds
+    // INSUFFICIENT FUNDS 
     @Test
     void debitTransaction_insufficientFunds() {
 
-        // Account setup
         Account account = new Account();
         account.setAccountNumber("ACC002");
         account.setProductType("SALARY");
         account.setProductCode("SAL1");
 
-        // Balance setup
-        Balance balance = new Balance();
-        balance.setBalance(new BigDecimal("50"));
-        balance.setAccount(account);
+        Balance ledger = new Balance();
+        ledger.setBalanceType(BalanceType.LEDGER);
+        ledger.setBalance(new BigDecimal("50"));
 
-        // Mock product and validator
-        Product product = mock(Product.class);
-        ProductValidator validator = mock(ProductValidator.class);
+        Balance available = new Balance();
+        available.setBalanceType(BalanceType.AVAILABLE);
+        available.setBalance(new BigDecimal("50"));
 
-        // Mock repository methods
         when(accountRepository.findByAccountNumber("ACC002"))
                 .thenReturn(Optional.of(account));
-        when(balanceRepository.findByAccountId(account.getId()))
-                .thenReturn(Optional.of(balance));
 
-        // Mock factory methods
-        when(productFactory.getProduct(anyString(), anyString())).thenReturn(product);
-        when(productFactory.getValidator(anyString())).thenReturn(validator);
+        when(balanceRepository.findByAccountAndType(account, BalanceType.LEDGER))
+                .thenReturn(Optional.of(ledger));
 
-        // Make validator do nothing
-        doNothing().when(validator).validateOnTransaction(any(), any());
+        when(balanceRepository.findByAccountAndType(account, BalanceType.AVAILABLE))
+                .thenReturn(Optional.of(available));
 
-        // Transaction request
+        when(productFactory.getProduct(any(), any()))
+                .thenReturn(product);
+
+        when(productFactory.getValidator(any()))
+                .thenReturn(productValidator);
+
+        doNothing().when(productValidator)
+                .validateOnTransaction(any(), any());
+
         PostTransactionRequest request = new PostTransactionRequest();
         request.setAccountNumber("ACC002");
         request.setPaymentType("DEBIT");
@@ -163,7 +158,7 @@ class TransactionServiceTest {
         );
     }
 
-
+    // AMOUNT RULE VIOLATION 
     @Test
     void transaction_amountRuleViolation() {
 
@@ -172,14 +167,22 @@ class TransactionServiceTest {
         account.setProductType("STUDENT");
         account.setProductCode("STU1");
 
-        Balance balance = new Balance();
-        balance.setBalance(new BigDecimal("1000"));
+        Balance ledger = new Balance();
+        ledger.setBalanceType(BalanceType.LEDGER);
+        ledger.setBalance(new BigDecimal("1000"));
+
+        Balance available = new Balance();
+        available.setBalanceType(BalanceType.AVAILABLE);
+        available.setBalance(new BigDecimal("1000"));
 
         when(accountRepository.findByAccountNumber("ACC003"))
                 .thenReturn(Optional.of(account));
 
-        when(balanceRepository.findByAccountId(account.getId()))
-                .thenReturn(Optional.of(balance));
+        when(balanceRepository.findByAccountAndType(account, BalanceType.LEDGER))
+                .thenReturn(Optional.of(ledger));
+
+        when(balanceRepository.findByAccountAndType(account, BalanceType.AVAILABLE))
+                .thenReturn(Optional.of(available));
 
         when(productFactory.getProduct("STUDENT", "STU1"))
                 .thenReturn(product);
@@ -202,58 +205,57 @@ class TransactionServiceTest {
         );
     }
 
+    // POSTING NUMBER 
     @Test
     void postingNumberGeneratedCorrectly() {
 
-        // Setup Account
         Account account = new Account();
         account.setAccountNumber("ACC004");
         account.setProductType("SALARY");
         account.setProductCode("SAL1");
 
-        // Setup Balance
-        Balance balance = new Balance();
-        balance.setBalance(new BigDecimal("200"));
-        balance.setAccount(account);
+        Balance ledger = new Balance();
+        ledger.setBalanceType(BalanceType.LEDGER);
+        ledger.setBalance(new BigDecimal("200"));
 
-        // Mock Product & Validator
-        Product product = mock(Product.class);
-        ProductValidator validator = mock(ProductValidator.class);
+        Balance available = new Balance();
+        available.setBalanceType(BalanceType.AVAILABLE);
+        available.setBalance(new BigDecimal("200"));
 
-        // Mock Repositories
         when(accountRepository.findByAccountNumber("ACC004"))
                 .thenReturn(Optional.of(account));
-        when(balanceRepository.findByAccountId(account.getId()))
-                .thenReturn(Optional.of(balance));
+
+        when(balanceRepository.findByAccountAndType(account, BalanceType.LEDGER))
+                .thenReturn(Optional.of(ledger));
+
+        when(balanceRepository.findByAccountAndType(account, BalanceType.AVAILABLE))
+                .thenReturn(Optional.of(available));
+
         when(productFactory.getProduct("SALARY", "SAL1"))
                 .thenReturn(product);
+
         when(productFactory.getValidator("SALARY"))
-                .thenReturn(validator);
+                .thenReturn(productValidator);
 
-        // Validator does nothing
-        doNothing().when(validator).validateOnTransaction(any(), any());
+        doNothing().when(productValidator)
+                .validateOnTransaction(any(), any());
 
-        // Mock Posting Number Generator
         when(postingNumberGenerator.generate())
                 .thenReturn("POST20251210-01");
 
-        // Mock Posting Repository Save
         when(postingRepository.save(any()))
-                .thenAnswer(invocation -> invocation.getArgument(0));
-        // Return the same posting object passed in, so number from generator is preserved
+                .thenAnswer(inv -> inv.getArgument(0));
 
-        // Create Request
         PostTransactionRequest request = new PostTransactionRequest();
         request.setAccountNumber("ACC004");
         request.setPaymentType("CREDIT");
         request.setAmount(new BigDecimal("50"));
 
-        // Call Service
-        PostTransactionResponse response = transactionService.postTransaction(request);
+        PostTransactionResponse response =
+                transactionService.postTransaction(request);
 
-        // Assert Posting Number
         assertEquals("POST20251210-01", response.getPostingNumber());
-
-        assertEquals(new BigDecimal("250"), balance.getBalance());
+        assertEquals(new BigDecimal("250"), ledger.getBalance());
+        assertEquals(new BigDecimal("250"), available.getBalance());
     }
 }

@@ -13,7 +13,6 @@ import org.ram.service.AccountService;
 import jakarta.ws.rs.GET; 
 import jakarta.ws.rs.QueryParam;
 
-
 @Path("/api/v1/accounts")
 @Consumes(MediaType.APPLICATION_JSON) // accept JSON input
 @Produces(MediaType.APPLICATION_JSON) // return JSON output

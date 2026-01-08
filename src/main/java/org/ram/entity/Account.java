@@ -3,6 +3,8 @@ package org.ram.entity;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "accounts")
@@ -30,8 +32,12 @@ public class Account {
     @Column (name = "created_at")
     private Instant createdAt = Instant.now();
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
-    private Balance balance;
+    @OneToMany(
+    mappedBy = "account",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true
+    )
+    private List<Balance> balances = new ArrayList<>();
 
     public long getId() {
         return id;}
@@ -79,11 +85,13 @@ public class Account {
     public Instant getCreatedAt() {
         return createdAt;
     }
-    public Balance getBalance() {
-        return balance;
+
+    public List<Balance> getBalances() {
+        return balances;
     }
 
-    public void setBalance(Balance balance) {
-        this.balance = balance;
+    public void setBalances(List<Balance> balances) {
+        this.balances = balances;
     }
+    
 }
